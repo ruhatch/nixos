@@ -14,6 +14,8 @@
             if self ? rev
             then self.rev
             else throw "Refusing to build from a dirty Git tree!";
+
+          nix.registry.nixpkgs.flake = nixpkgs;
         })
       ];
     };
