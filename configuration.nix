@@ -321,25 +321,10 @@ in
   #   clock = "slock";
   # };
 
-  # virtualisation.virtualbox.host.enable = true;
-
-  # nix.useSandbox = true;
-
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "17.09";
 
   system.autoUpgrade.enable = true;
-
-  # IOHK
-  nix.binaryCaches = [
-    "http://cache.nixos.org"
-    "https://hydra.iohk.io"
-    "https://nixcache.reflex-frp.org"
-  ];
-  nix.binaryCachePublicKeys = [
-    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-    "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
-  ];
 
   programs.gnupg.agent.enable = true;
 
