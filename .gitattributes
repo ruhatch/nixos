@@ -1,1 +1,2 @@
 keys.nix filter=git-crypt diff=git-crypt
+networking.nix filter=git-crypt diff=git-crypt
