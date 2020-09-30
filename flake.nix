@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-20.03;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-20.09;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
 
   outputs = { self, nixpkgs, nixos-hardware }: {
