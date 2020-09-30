@@ -163,6 +163,7 @@
   services.redshift = {
     enable = true;
     brightness.night = "0.3";
+    temperature.day = 5000;
   };
   location.provider = "geoclue2";
 
