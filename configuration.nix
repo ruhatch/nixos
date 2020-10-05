@@ -17,17 +17,32 @@
   hardware.enableRedistributableFirmware = true;
 
   # Use the systemd-boot EFI boot loader.
-  boot.kernelModules = [ "coretemp" ];
-  boot.kernelParams = [ "i8042.reset" ];
-  boot.loader.grub.device = "/dev/nvme0n1";
-  boot.loader.timeout = 0;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.plymouth.enable = true;
+  boot = {
+    kernelModules = [ "coretemp" ];
+    kernelParams = [ "i8042.reset" ];
+    loader.grub.device = "/dev/nvme0n1";
+    loader.timeout = 0;
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    plymouth.enable = true;
+  };
 
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware = {
+    bluetooth.enable = true;
+    cpu.intel.updateMicrocode = true;
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    };
+  };
 
   swapDevices = [ { label = "swap"; } ];
+
+  # The NixOS release to be compatible with for stateful data such as databases.
+  system = {
+    autoUpgrade.enable = true;
+    stateVersion = "17.09";
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -39,7 +54,29 @@
   # Set your time zone.
   time.timeZone = "Europe/London";
 
-  nixpkgs.config.allowUnfree = true;
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users = {
+    defaultUserShell = pkgs.zsh;
+
+    groups = {
+      plugdev = {};
+      video = {}; # Needed for light
+    };
+
+    users.rupert = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "input" "audio" "video" "plugdev" ];
+      useDefaultShell = true;
+    };
+  };
+
+  programs = {
+    gnupg.agent.enable = true;
+    light.enable = true; # Backlight control
+    steam.enable = true;
+    vim.defaultEditor = true;
+    zsh.enable = true;
+  };
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -92,120 +129,103 @@
     rapid-photo-downloader
   ];
 
-  programs.steam.enable = true;
-
-  # Enable light for setting backlight and add video group for permissions
-  programs.light.enable = true;
-  users.groups.video = {};
-
-  programs.zsh = {
-    enable = true;
-    # ohMyZsh = {
-    #   enable = true;
-    #   theme = "spaceship";
-    # };
-  };
-
-  users.defaultUserShell = pkgs.zsh;
-
-  programs.vim.defaultEditor = true;
-
   security.wrappers.slock.source = "${pkgs.slock.out}/bin/slock";
-
-  environment.shells = [ "/run/current-system/sw/bin/zsh" ];
 
   fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome-ttf ];
 
   # List services that you want to enable:
+  services = {
+    logind.lidSwitch = "hibernate";
+    lorri.enable = true;
+    openssh.enable = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+    # Enable CUPS to print documents.
+    printing = {
+      enable = true;
+      drivers = [ pkgs.gutenprint ];
+    };
 
-  hardware.bluetooth.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
+    postgresql.enable = true;
+
+    # Enable redshift to change screen temperature
+    redshift = {
+      enable = true;
+      brightness.night = "0.3";
+      temperature.day = 5000;
+    };
+
+    # Enable the X11 windowing system.
+    xserver = {
+      enable = true;
+      displayManager = {
+        xserverArgs = [ "-dpi 192" ];
+        lightdm = {
+          enable = true;
+          background = "/etc/nixos/background.jpg";
+          greeters.pantheon.enable = true;
+        };
+      };
+      windowManager.xmonad.enable = true;
+      windowManager.xmonad.enableContribAndExtras = true;
+      layout = "gb";
+      libinput.enable = true;
+      libinput.naturalScrolling = true;
+      libinput.tapping = false;
+    };
   };
 
-  services.logind.lidSwitch = "hibernate";
+  location.provider = "geoclue2"; # For redshift
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.gutenprint ];
-
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      xserverArgs = [ "-dpi 192" ];
-      lightdm = {
-        enable = true;
-        background = "/etc/nixos/background.jpg";
-        greeters.pantheon.enable = true;
+  # Set up the environment, including themes, system packages, and variables 
+  environment = {
+    etc = {
+      # QT4/5 global theme
+      "xdg/Trolltech.conf" = {
+        text = ''
+          [Qt]
+          style=Arc-Darker
+        '';
+        mode = "444";
+      };
+      "xdg/gtk-3.0/settings.ini" = {
+        text = ''
+          [Settings]
+          gtk-icon-theme-name=breeze
+          gtk-theme-name=Arc-Darker
+        '';
+        mode = "444";
+      };
+      "libinput-gestures.conf" = {
+        text = ''
+          device DLL06E4:01 06CB:7A13 Touchpad
+          gesture swipe left xdotool key Super_L+shift+Tab
+          gesture swipe right xdotool key Super_L+shift+alt+Tab
+        '';
+        mode = "444";
       };
     };
-    windowManager.xmonad.enable = true;
-    windowManager.xmonad.enableContribAndExtras = true;
-    layout = "gb";
-    libinput.enable = true;
-    libinput.naturalScrolling = true;
-    libinput.tapping = false;
-  };
 
-  # Enable Redshift to change screen temperature
-  services.redshift = {
-    enable = true;
-    brightness.night = "0.3";
-    temperature.day = 5000;
-  };
-  location.provider = "geoclue2";
+    extraInit = ''
+      # GTK3: add /etc/xdg/gtk-3.0 to search path for settings.ini
+      # We use /etc/xdg/gtk-3.0/settings.ini to set the icon and theme name for GTK 3
+      export XDG_CONFIG_DIRS="/etc/xdg:$XDG_CONFIG_DIRS"
+      # GTK2 theme + icon theme
+      export GTK2_RC_FILES=${pkgs.arc-theme}/share/themes/Arc-Darker/gtk-2.0/gtkrc:$GTK2_RC_FILES
 
-  services.lorri.enable = true;
-
-  # Themes
-  environment.extraInit = ''
-    # GTK3: add /etc/xdg/gtk-3.0 to search path for settings.ini
-    # We use /etc/xdg/gtk-3.0/settings.ini to set the icon and theme name for GTK 3
-    export XDG_CONFIG_DIRS="/etc/xdg:$XDG_CONFIG_DIRS"
-    # GTK2 theme + icon theme
-    export GTK2_RC_FILES=${pkgs.arc-theme}/share/themes/Arc-Darker/gtk-2.0/gtkrc:$GTK2_RC_FILES
-
-    # these are the defaults, but some applications are buggy so we set them
-    # here anyway
-    export XDG_CONFIG_HOME=$HOME/.config
-    export XDG_DATA_HOME=$HOME/.local/share
-    export XDG_CACHE_HOME=$HOME/.cache
-  '';
-
-  # QT4/5 global theme
-  environment.etc."xdg/Trolltech.conf" = {
-    text = ''
-      [Qt]
-      style=Arc-Darker
+      # these are the defaults, but some applications are buggy so we set them
+      # here anyway
+      export XDG_CONFIG_HOME=$HOME/.config
+      export XDG_DATA_HOME=$HOME/.local/share
+      export XDG_CACHE_HOME=$HOME/.cache
     '';
-    mode = "444";
-  };
 
-  environment.etc."xdg/gtk-3.0/settings.ini" = {
-    text = ''
-      [Settings]
-      gtk-icon-theme-name=breeze
-      gtk-theme-name=Arc-Darker
-    '';
-    mode = "444";
-  };
+    shells = [ "/run/current-system/sw/bin/zsh" ];
 
-  environment.etc."libinput-gestures.conf" = {
-    text = ''
-      device DLL06E4:01 06CB:7A13 Touchpad
-      gesture swipe left xdotool key Super_L+shift+Tab
-      gesture swipe right xdotool key Super_L+shift+alt+Tab
-    '';
-    mode = "444";
+    variables = {
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      SUDO_ASKPASS = "${pkgs.x11_ssh_askpass}/libexec/ssh-askpass";
+    };
   };
-
-  environment.variables.QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-  environment.variables.SUDO_ASKPASS = "${pkgs.x11_ssh_askpass}/libexec/ssh-askpass";
 
   systemd.user.services."libinput-gestures" = {
     description = "Add multitouch gestures using libinput-gestures";
@@ -216,15 +236,6 @@
     environment = { DISPLAY = ":0"; };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rupert = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "input" "audio" "video" "plugdev" ];
-    useDefaultShell = true;
-  };
-
-  users.groups.plugdev = {};
-
   # programs.oblogout = {
   #   enable = true;
   #   buttons = "cancel, logout, restart, shutdown, lock, hibernate";
@@ -232,16 +243,7 @@
   #   clock = "slock";
   # };
 
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.09";
-
-  system.autoUpgrade.enable = true;
-
-  programs.gnupg.agent.enable = true;
-
-  # Money&Co.
-  services.postgresql.enable = true;
-
+  # Money&Co. TODO: Clean this up
   environment.etc.git-ssh-config = {
     text = ''
       Host github.com
@@ -265,11 +267,14 @@
     systemctl restart dhcpcd.service
   '';
 
-  nix.package = pkgs.nixUnstable;
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    trustedUsers = [ "root" "rupert" ];
+  };
 
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
+  nixpkgs.config.allowUnfree = true;
 
-  nix.trustedUsers = [ "root" "rupert" ];
 }
