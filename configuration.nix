@@ -90,16 +90,9 @@
     # Photo handling
     gphoto2
     rapid-photo-downloader
-
-    # Only needed until PR https://github.com/NixOS/nixpkgs/pull/86480
-    # steam
   ];
 
-  # Only needed until PR https://github.com/NixOS/nixpkgs/pull/86480
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
+  programs.steam.enable = true;
 
   # Enable light for setting backlight and add video group for permissions
   programs.light.enable = true;
