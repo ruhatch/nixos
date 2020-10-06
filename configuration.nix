@@ -246,13 +246,22 @@
     };
   };
 
-  systemd.user.services."libinput-gestures" = {
-    description = "Add multitouch gestures using libinput-gestures";
-    wantedBy = [ "default.target" ];
-    serviceConfig.Restart = "always";
-    serviceConfig.RestartSec = 2;
-    serviceConfig.ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
-    environment = { DISPLAY = ":0"; };
+  systemd.user.services = {
+    "libinput-gestures" = {
+      description = "Add multitouch gestures using libinput-gestures";
+      wantedBy = [ "default.target" ];
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 2;
+      serviceConfig.ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
+      environment = { DISPLAY = ":0"; };
+    };
+    "feh-background" = {
+      description = "Set desktop background using feh";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig.Type = "oneshot";
+      serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
+    };
   };
 
   # programs.oblogout = {
