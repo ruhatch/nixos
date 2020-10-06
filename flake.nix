@@ -7,7 +7,6 @@
       system = "x86_64-linux";
       modules = [
         nixos-hardware.nixosModules.dell-xps-15-9550
-        nixpkgs.nixosModules.notDetected
         ./configuration.nix
         ({
           system.configurationRevision =

@@ -13,9 +13,6 @@
       ./scripts.nix
     ];
 
-  # Add this from broadcom-43xx.nix module to allow flake usage
-  hardware.enableRedistributableFirmware = true;
-
   # Use the systemd-boot EFI boot loader.
   boot = {
     kernelModules = [ "coretemp" ];
