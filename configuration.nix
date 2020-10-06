@@ -116,7 +116,6 @@
     openvpn
     ormolu
     pavucontrol
-    picom
     python3 # For floobits
     ripgrep
     rofi
@@ -143,6 +142,24 @@
     logind.lidSwitch = "hibernate";
     lorri.enable = true;
     openssh.enable = true;
+
+    # Enable picom for compositing
+    picom = {
+      enable = true;
+      backend = "glx";
+      fade = true;
+      settings = { 
+        detect-transient = true;
+        detect-client-leader = true;
+        xrender-sync-fence = true;
+      };
+      shadow = true;
+      shadowOffsets = [ (-17) (-17) ];
+      wintypes = { 
+        dock = { shadow = false; }; 
+        dropdown_menu = { shadow = false; };
+      };
+    };
 
     # Enable CUPS to print documents.
     printing = {
