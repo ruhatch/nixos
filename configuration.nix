@@ -11,6 +11,7 @@
       ./keys.nix
       ./networking.nix
       ./scripts.nix
+      ./tiny-greeter-config.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -145,15 +146,15 @@
       enable = true;
       backend = "glx";
       fade = true;
-      settings = { 
+      settings = {
         detect-transient = true;
         detect-client-leader = true;
         xrender-sync-fence = true;
       };
       shadow = true;
       shadowOffsets = [ (-17) (-17) ];
-      wintypes = { 
-        dock = { shadow = false; }; 
+      wintypes = {
+        dock = { shadow = false; };
         dropdown_menu = { shadow = false; };
       };
     };
@@ -177,11 +178,13 @@
     xserver = {
       enable = true;
       displayManager = {
+        defaultSession = "none+xmonad";
         xserverArgs = [ "-dpi 192" ];
         lightdm = {
           enable = true;
           background = "/etc/nixos/background.jpg";
-          greeters.pantheon.enable = true;
+          greeters.tiny.enable = true;
+          # greeters.pantheon.enable = true;
         };
       };
       windowManager.xmonad.enable = true;
@@ -195,7 +198,7 @@
 
   location.provider = "geoclue2"; # For redshift
 
-  # Set up the environment, including themes, system packages, and variables 
+  # Set up the environment, including themes, system packages, and variables
   environment = {
     etc = {
       # QT4/5 global theme
