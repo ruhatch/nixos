@@ -20,10 +20,15 @@
   boot = {
     kernelModules = [ "coretemp" ];
     kernelParams = [ "i8042.reset" ];
-    loader.grub.device = "/dev/nvme0n1";
-    loader.timeout = 0;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
+    loader = {
+      grub.device = "/dev/nvme0n1";
+      timeout = 0;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 100;
+      };
+      efi.canTouchEfiVariables = true;
+    };
     plymouth.enable = true;
   };
 
