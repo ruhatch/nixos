@@ -296,6 +296,7 @@
   # Fixing network failure on resume bug
   powerManagement.resumeCommands = ''
     systemctl restart dhcpcd.service
+    systemctl restart wpa_supplicant.service
   '';
 
   nix = {
