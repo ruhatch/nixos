@@ -101,6 +101,7 @@
     gnumake
     gnupg
     gxmessage
+    haskellPackages.fourmolu
     haskellPackages.ghcid
     haskellPackages.hasktags
     haskellPackages.hlint
@@ -112,7 +113,6 @@
     minecraft
     openssl
     openvpn
-    ormolu
     pavucontrol
     python3 # For floobits
     ripgrep
