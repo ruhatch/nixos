@@ -225,6 +225,12 @@
         '';
         mode = "444";
       };
+      "stack/config.yaml" = {
+        text = ''
+          system-ghc: true
+        '';
+        mode = "444";
+      };
     };
 
     extraInit = ''
