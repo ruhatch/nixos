@@ -38,9 +38,9 @@ let
     }
 
     killPom(){
-      if [ $(pgrep -c -f "pom ") -ge 2 ]; then
-        kill -9 $(pgrep -f "pom " | head -n -2)
-      fi
+      while [ $(pgrep -c -f "pom ") -ge 2 ]; do
+        kill -9 $(pgrep -of "pom ")
+      done
     }
 
     printUsage(){
