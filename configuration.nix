@@ -88,6 +88,7 @@
     aspell
     aspellDicts.en
     at_spi2_core
+    brave
     breeze-qt5
     cabal-install
     direnv
