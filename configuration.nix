@@ -94,6 +94,7 @@
     direnv
     discount # Markdown rendering
     emacs
+    exercism
     fasd
     feh
     firefox
