@@ -99,6 +99,7 @@
     feh
     firefox
     git
+    gitAndTools.gh
     git-crypt
     gnumake
     gnupg
