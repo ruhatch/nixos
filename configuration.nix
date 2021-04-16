@@ -68,7 +68,7 @@
 
     users.rupert = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "audio" "video" "plugdev" ];
+      extraGroups = [ "wheel" "input" "audio" "video" "plugdev" "docker" ];
       useDefaultShell = true;
     };
   };
@@ -275,6 +275,8 @@
       serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
     };
   };
+
+  virtualisation.docker.enable = true;
 
   # programs.oblogout = {
   #   enable = true;
