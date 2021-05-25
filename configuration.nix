@@ -68,12 +68,13 @@
 
     users.rupert = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "audio" "video" "plugdev" "docker" ];
+      extraGroups = [ "wheel" "input" "audio" "video" "plugdev" "docker" "adbusers" ];
       useDefaultShell = true;
     };
   };
 
   programs = {
+    adb.enable = true;
     gnupg.agent.enable = true;
     light.enable = true; # Backlight control
     steam.enable = true;
