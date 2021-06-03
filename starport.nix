@@ -3,7 +3,7 @@
 buildGoModule rec {
 
   pname = "starport";
-  version = "0.16.1";
+  version = "0.15.1";
 
   src = fetchFromGitHub {
     owner = "tendermint";
