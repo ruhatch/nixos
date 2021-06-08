@@ -1,10 +1,11 @@
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-21.05;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  inputs.unfree-nixpkgs.url = path:unfree-nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
   inputs.onlyoffice.url = github:GTrunSec/onlyoffice-desktopeditors-flake;
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, onlyoffice }: {
+  outputs = { self, nixpkgs, unfree-nixpkgs, nixpkgs-unstable, nixos-hardware, onlyoffice }: {
     nixosConfigurations.delilah = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
@@ -22,6 +23,7 @@
             else throw "Refusing to build from a dirty Git tree!";
 
           nix.registry.nixpkgs.flake = nixpkgs;
+          nix.registry.unfree-nixpkgs.flake = unfree-nixpkgs;
         })
       ];
     };
