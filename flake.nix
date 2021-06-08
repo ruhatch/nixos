@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-20.09;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-21.05;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
   inputs.onlyoffice.url = github:GTrunSec/onlyoffice-desktopeditors-flake;

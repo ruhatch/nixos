@@ -195,8 +195,10 @@
       windowManager.xmonad.enableContribAndExtras = true;
       layout = "gb";
       libinput.enable = true;
-      libinput.naturalScrolling = true;
-      libinput.tapping = false;
+      libinput.touchpad = {
+        naturalScrolling = true;
+        tapping = false;
+      };
     };
   };
 
