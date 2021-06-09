@@ -118,6 +118,7 @@
     openssl
     openvpn
     pavucontrol
+    pre-commit
     python3 # For floobits
     ripgrep
     rofi
