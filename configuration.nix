@@ -128,6 +128,7 @@
     stack
     texlive.combined.scheme-full
     vlc
+    vscodium
     xdotool
     xssproxy
     zathura
