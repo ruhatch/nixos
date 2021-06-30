@@ -136,6 +136,12 @@
     # Photo handling
     gphoto2
     rapid-photo-downloader
+
+    # Go Tools
+    delve
+    gopkgs
+    gopls
+    go-outline
   ];
 
   security.wrappers.slock.source = "${pkgs.slock.out}/bin/slock";
