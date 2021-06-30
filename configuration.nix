@@ -104,6 +104,7 @@
     git-crypt
     gnumake
     gnupg
+    go
     gxmessage
     haskellPackages.fourmolu
     haskellPackages.ghcid
