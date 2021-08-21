@@ -129,6 +129,7 @@
     texlive.combined.scheme-full
     vlc
     vscodium
+    wpa_supplicant_gui
     xdotool
     xssproxy
     zathura
