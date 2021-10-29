@@ -33,6 +33,8 @@
   hardware = {
     bluetooth.enable = true;
     cpu.intel.updateMicrocode = true;
+    # Enable udev rules for Ledger support
+    ledger.enable = true;
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
