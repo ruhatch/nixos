@@ -147,7 +147,7 @@
     go-outline
   ];
 
-  security.wrappers.slock.source = "${pkgs.slock.out}/bin/slock";
+  # security.wrappers.slock.source = "${pkgs.slock.out}/bin/slock";
 
   fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome-ttf ];
 
