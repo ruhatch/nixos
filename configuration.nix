@@ -11,6 +11,8 @@
       ./keys.nix
       ./networking.nix
       ./scripts.nix
+
+      ./rofi-config.nix
       ./tiny-greeter-config.nix
     ];
 
