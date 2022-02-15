@@ -322,10 +322,10 @@
   ];
 
   # Fixing network failure on resume bug
-  powerManagement.resumeCommands = ''
-    systemctl restart dhcpcd.service
-    systemctl restart wpa_supplicant-wlp2s0.service
-  '';
+  #powerManagement.resumeCommands = ''
+  #  systemctl restart dhcpcd.service
+  #  systemctl restart wpa_supplicant-wlp2s0.service
+  #'';
 
   nix = {
     package = pkgs.nixUnstable;
