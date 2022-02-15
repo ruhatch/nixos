@@ -108,7 +108,6 @@
     git-crypt
     gnumake
     gnupg
-    go
     gxmessage
     haskellPackages.fourmolu
     haskellPackages.ghcid
@@ -124,7 +123,6 @@
     openvpn
     pavucontrol
     pre-commit
-    python3 # For floobits
     ripgrep
     rofi
     rxvt_unicode
@@ -132,7 +130,6 @@
     stack
     texlive.combined.scheme-full
     vlc
-    vscodium
     wpa_supplicant_gui
     xdotool
     xssproxy
@@ -141,15 +138,7 @@
     # Photo handling
     gphoto2
     rapid-photo-downloader
-
-    # Go Tools
-    delve
-    gopkgs
-    gopls
-    go-outline
   ];
-
-  # security.wrappers.slock.source = "${pkgs.slock.out}/bin/slock";
 
   fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome-ttf ];
 
@@ -202,7 +191,6 @@
           enable = true;
           background = "/etc/nixos/background.jpg";
           greeters.tiny.enable = true;
-          # greeters.pantheon.enable = true;
         };
       };
       windowManager.xmonad.enable = true;
@@ -295,37 +283,11 @@
 
   virtualisation.docker.enable = true;
 
-  # programs.oblogout = {
-  #   enable = true;
-  #   buttons = "cancel, logout, restart, shutdown, lock, hibernate";
-  #   clogout = "xdotool key Super_L+shift+Q";
-  #   clock = "slock";
-  # };
-
-  # Money&Co. TODO: Clean this up
-  environment.etc.git-ssh-config = {
-    text = ''
-      Host github.com
-      IdentityFile /etc/ssh/mandco_rsa_key
-      StrictHostKeyChecking=no
-    '';
-    user = "nixbld1";
-    group = "nixbld";
-    mode = "0400";
-  };
-
-  nix.nixPath = [
-    "ssh-config-file=/etc/git-ssh-config"
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs"
-    "nixos-config=/etc/nixos/configuration.nix"
-    "/nix/var/nix/profiles/per-user/root/channels"
-  ];
-
   # Fixing network failure on resume bug
-  #powerManagement.resumeCommands = ''
-  #  systemctl restart dhcpcd.service
-  #  systemctl restart wpa_supplicant-wlp2s0.service
-  #'';
+  powerManagement.resumeCommands = ''
+    systemctl restart dhcpcd.service
+    systemctl restart wpa_supplicant-wlp2s0.service
+  '';
 
   nix = {
     package = pkgs.nixUnstable;
