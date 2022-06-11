@@ -49,21 +49,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1607560137,
-        "narHash": "sha256-qI5U28r9Ie11OlkwzNFkhW0Z4jLanntJdb3JeFq/85A=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7ff5e241a2b96fff7912b7d793a06b4374bd846c",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "rev": "7ff5e241a2b96fff7912b7d793a06b4374bd846c",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1654807735,
         "narHash": "sha256-IiOjbptu1s07HTuyv2ONLrw/DcIUg3nX9MO1uEiUmP0=",
         "owner": "NixOS",
@@ -78,36 +63,17 @@
         "type": "github"
       }
     },
-    "onlyoffice": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1609449972,
-        "narHash": "sha256-xLZ11F/VmwuRJfh1jZnCVPJOi8cLLHGIgDfZ6tArgl4=",
-        "owner": "GTrunSec",
-        "repo": "onlyoffice-desktopeditors-flake",
-        "rev": "6a404e6916a39e8b51211d64c438a3b25d139013",
-        "type": "github"
-      },
-      "original": {
-        "owner": "GTrunSec",
-        "repo": "onlyoffice-desktopeditors-flake",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "onlyoffice": "onlyoffice",
         "unfree-nixpkgs": "unfree-nixpkgs"
       }
     },
     "unfree-nixpkgs": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "narHash": "sha256-EVq4vlp8znuohDzvgWYd4n9sbMaGTDdKZNEtcWzhBnc=",

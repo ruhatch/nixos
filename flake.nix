@@ -3,20 +3,14 @@
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.unfree-nixpkgs.url = path:unfree-nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
-  inputs.onlyoffice.url = github:GTrunSec/onlyoffice-desktopeditors-flake;
 
-  outputs = { self, nixpkgs, unfree-nixpkgs, nixpkgs-unstable, nixos-hardware, onlyoffice }: {
+  outputs = { self, nixpkgs, unfree-nixpkgs, nixpkgs-unstable, nixos-hardware }: {
     nixosConfigurations.delilah = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
         nixos-hardware.nixosModules.dell-xps-15-9550
         ./configuration.nix
         ({
-          environment.systemPackages = [
-            onlyoffice.defaultPackage."${system}"
-            ((import nixpkgs { inherit system; }).callPackage ./starport.nix { inherit (import nixpkgs-unstable { inherit system; }) buildGoModule; })
-          ];
-
           system.configurationRevision =
             if self ? rev
             then self.rev
