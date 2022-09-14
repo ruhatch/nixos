@@ -92,7 +92,6 @@
     arc-theme
     aspell
     aspellDicts.en
-    at_spi2_core
     brave
     breeze-qt5
     cabal-install
@@ -140,7 +139,7 @@
     rapid-photo-downloader
   ];
 
-  fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome-ttf ];
+  fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome ];
 
   # List services that you want to enable:
   services = {
@@ -171,8 +170,6 @@
       enable = true;
       drivers = [ pkgs.gutenprint ];
     };
-
-    postgresql.enable = true;
 
     # Enable redshift to change screen temperature
     redshift = {
