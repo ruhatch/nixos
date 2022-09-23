@@ -97,6 +97,7 @@
     arc-theme
     aspell
     aspellDicts.en
+    blueberry
     brave
     breeze-qt5
     cabal-install
