@@ -124,6 +124,9 @@
     keepassx2
     keychain
     minecraft
+    nodejs-slim
+    nodePackages.npm
+    nodePackages.create-react-app
     openssl
     openvpn
     pavucontrol
