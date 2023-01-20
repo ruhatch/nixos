@@ -19,6 +19,11 @@ let
     done
   '';
 
+  # 'clip' copies a screenshot to the clipboard
+  clip = pkgs.writeScriptBin "clip" ''
+    scrot -a $(slop -f '%x,%y,%w,%h') -e 'xclip -selection clipboard -t image/png -i $f && rm $f'
+  '';
+
   # 'focus' is a small script to set a focus in xmobar
   focus = pkgs.writeScriptBin "focus" ''
     xprop -root -f focus 8s -set focus "$*"
@@ -80,5 +85,5 @@ let
 
 in
 {
-  environment.systemPackages = [show-clock focus pom];
+  environment.systemPackages = [show-clock clip pkgs.scrot pkgs.slop pkgs.xclip focus pom];
 }
