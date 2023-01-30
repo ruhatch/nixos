@@ -208,6 +208,7 @@
         tapping = false;
       };
       videoDrivers = [ "nvidia" ];
+      xkbOptions = "compose:ralt";
     };
   };
 
