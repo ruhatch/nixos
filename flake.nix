@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-22.05;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.unfree-nixpkgs.url = path:unfree-nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
@@ -15,6 +15,11 @@
             if self ? rev
             then self.rev
             else throw "Refusing to build from a dirty Git tree!";
+
+          nix.  nixPath = [
+	    "nixpkgs=${nixpkgs}"
+	    "/nix/var/nix/profiles/per-user/root/channels"
+	  ];
 
           nix.registry.nixpkgs.flake = nixpkgs;
           nix.registry.unfree-nixpkgs.flake = unfree-nixpkgs;

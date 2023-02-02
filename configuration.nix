@@ -302,7 +302,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    trustedUsers = [ "root" "rupert" ];
+    settings.trusted-users = [ "root" "rupert" ];
   };
 
   nixpkgs.config.allowUnfree = true;
