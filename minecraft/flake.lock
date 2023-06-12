@@ -58,7 +58,6 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "metadata": [
-          "minecraft-nix",
           "minecraft-metadata"
         ],
         "nixpkgs": "nixpkgs"
@@ -96,39 +95,6 @@
         "type": "github"
       }
     },
-    "minecraft-nix": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "minecraft": "minecraft",
-        "minecraft-metadata": "minecraft-metadata",
-        "nixpkgs": "nixpkgs_3"
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-pZeq+xD1Jhom1tQRnWbjwQqfPOnkLatpScYHooArgn4=",
-        "path": "minecraft",
-        "type": "path"
-      },
-      "original": {
-        "path": "minecraft",
-        "type": "path"
-      }
-    },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1684899633,
-        "narHash": "sha256-NtwerXX8UFsoNy6k+DukJMriWtEjQtMU/Urbff2O2Dg=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "4cc688ee711159b9bcb5a367be44007934e1a49d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1686530445,
@@ -140,38 +106,6 @@
       },
       "original": {
         "owner": "NixOS",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-20": {
-      "locked": {
-        "lastModified": 1635350005,
-        "narHash": "sha256-tAMJnUwfaDEB2aa31jGcu7R7bzGELM9noc91L2PbVjg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "1c1f5649bb9c1b0d98637c8c365228f57126f361",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-20.09",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1685012353,
-        "narHash": "sha256-U3oOge4cHnav8OLGdRVhL45xoRj4Ppd+It6nPC9nNIU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "aeb75dba965e790de427b73315d5addf91a54955",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -207,46 +141,12 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
-      "locked": {
-        "lastModified": 1685215858,
-        "narHash": "sha256-IRMFoDXA6cYx3ifVw3B2JcC4JrjT5v7tRAx2vro2Ffs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ba6e4ddeb3e8ad3f3e3bec63dafbc9fe558729bb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
-        "lastModified": 1684398685,
-        "narHash": "sha256-TRE62m91iZ5ArVMgA+uj22Yda8JoQuuhc9uwZ+NoX+0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "628d4bb6e9f4f0c30cfd9b23d3c1cdcec9d3cb5c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "minecraft-nix": "minecraft-nix",
-        "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_4",
-        "nixpkgs-20": "nixpkgs-20",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "unfree-nixpkgs": "unfree-nixpkgs"
+        "flake-utils": "flake-utils",
+        "minecraft": "minecraft",
+        "minecraft-metadata": "minecraft-metadata",
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "systems": {
@@ -292,21 +192,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
-      }
-    },
-    "unfree-nixpkgs": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_5"
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-QxlwWozW06isjd4JeRMPUcHXx5PVT+Poc4CqKv2sNt0=",
-        "path": "unfree-nixpkgs",
-        "type": "path"
-      },
-      "original": {
-        "path": "unfree-nixpkgs",
-        "type": "path"
       }
     }
   },

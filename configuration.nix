@@ -37,8 +37,10 @@
     cpu.intel.updateMicrocode = true;
     # Enable udev rules for Ledger support
     ledger.enable = true;
+    opengl.enable = true;
     nvidia.prime = {
-      offload.enable = true;
+      sync.enable = true;
+      # offload.enable = true;
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
     };

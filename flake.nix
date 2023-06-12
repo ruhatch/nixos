@@ -4,7 +4,7 @@
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.unfree-nixpkgs.url = path:unfree-nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
-  inputs.minecraft-nix.url = github:Ninlives/minecraft.nix;
+  inputs.minecraft-nix.url = path:minecraft;
 
   outputs = { self, nixpkgs-20, nixpkgs, unfree-nixpkgs, nixpkgs-unstable, nixos-hardware, minecraft-nix }: {
     nixosConfigurations.delilah = nixpkgs.lib.nixosSystem rec {
