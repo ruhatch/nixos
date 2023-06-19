@@ -13,6 +13,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       inherit (pkgs) fetchurl stdenv;
     in {
+      packages.minecraft = minecraft.legacyPackages.${system}.v1_19_4.vanilla.client;
       packages.minecraft-realistic =
         (minecraft.legacyPackages.${system}.v1_19_4.fabric.client.withConfig [{
           mods = [
