@@ -131,7 +131,6 @@ in
     haskellPackages.xmobar
     hsetroot
     htop
-    keepassx2
     keychain
     nvidia-offload
     nodejs-slim
