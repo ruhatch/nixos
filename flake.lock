@@ -162,11 +162,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1690441914,
-        "narHash": "sha256-Ac+kJQ5z9MDAMyzSc0i0zJDx2i3qi9NjlW5Lz285G/I=",
+        "lastModified": 1690593349,
+        "narHash": "sha256-i6jdORO+YiP19pFNeR7oYIIwmzQvdxwNO+BmtATcYpA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "db8672b8d0a2593c2405aed0c1dfa64b2a2f428f",
+        "rev": "11cf5e1c74fe6892e860afeeaf3bfb84fdb7b1c3",
         "type": "github"
       },
       "original": {
@@ -209,32 +209,32 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1690370995,
-        "narHash": "sha256-9z//23jGegLJrf3ITStLwVf715O39dq5u48Kr/XW14U=",
+        "lastModified": 1689575126,
+        "narHash": "sha256-wfQxe7QLH8rQEkh6geA+hJlhDIauPrP0xWhtgStnOAk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f3fbbc36b4e179a5985b9ab12624e9dfe7989341",
+        "rev": "c1bafcfd2009624867045bb2163b851dfcb549cb",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-23.05",
         "repo": "nixpkgs",
+        "rev": "c1bafcfd2009624867045bb2163b851dfcb549cb",
         "type": "github"
       }
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1684398685,
-        "narHash": "sha256-TRE62m91iZ5ArVMgA+uj22Yda8JoQuuhc9uwZ+NoX+0=",
+        "lastModified": 1690726002,
+        "narHash": "sha256-cACz6jCJZtsZHGCJAN4vMobxzH5s6FCOTZHMrh/Hu0M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "628d4bb6e9f4f0c30cfd9b23d3c1cdcec9d3cb5c",
+        "rev": "391e8db1f06c3f74c2d313a73135515023af3993",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.11",
+        "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -300,7 +300,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-QxlwWozW06isjd4JeRMPUcHXx5PVT+Poc4CqKv2sNt0=",
+        "narHash": "sha256-iEE0i6Tkduf1eiERj7zDv4A4VxKPedRcGAOmcu10AZ8=",
         "path": "unfree-nixpkgs",
         "type": "path"
       },

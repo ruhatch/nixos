@@ -1,6 +1,6 @@
 {
   inputs.nixpkgs-20.url = github:NixOS/nixpkgs/nixos-20.09;
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs?rev=c1bafcfd2009624867045bb2163b851dfcb549cb;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.unfree-nixpkgs.url = path:unfree-nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
