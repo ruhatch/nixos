@@ -47,10 +47,13 @@ in
     # Enable udev rules for Ledger support
     ledger.enable = true;
     opengl.enable = true;
-    nvidia.prime = {
-      offload.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+    nvidia = {
+      modesetting.enable = true;
+      prime = {
+        offload.enable = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
     };
     pulseaudio = {
       enable = true;
@@ -158,7 +161,7 @@ in
     rapid-photo-downloader
   ];
 
-  fonts.fonts = with pkgs; [ fira-code fira-code-symbols font-awesome ];
+  fonts.packages = with pkgs; [ fira-code fira-code-symbols font-awesome ];
 
   # List services that you want to enable:
   services = {
