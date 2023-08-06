@@ -144,6 +144,7 @@ in
     optifine
     pavucontrol
     pre-commit
+    prismlauncher
     ripgrep
     rofi
     rxvt_unicode
