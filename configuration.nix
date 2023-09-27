@@ -25,6 +25,10 @@ in
       ./tiny-greeter-config.nix
     ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "wpsoffice"
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot = {
     kernelModules = [ "coretemp" ];
