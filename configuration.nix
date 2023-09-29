@@ -34,10 +34,14 @@ in
     kernelModules = [ "coretemp" ];
     kernelParams = [ "i8042.reset" ];
     loader = {
-      grub.device = "/dev/nvme0n1";
-      timeout = 0;
+      grub = {
+        device = "/dev/nvme0n1";
+        useOSProber = true;
+      };
+      timeout = 10;
       systemd-boot = {
         enable = true;
+        consoleMode = "max";
         configurationLimit = 100;
       };
       efi.canTouchEfiVariables = true;
