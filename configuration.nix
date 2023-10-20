@@ -172,7 +172,7 @@ in
     rapid-photo-downloader
   ];
 
-  fonts.packages = with pkgs; [ fira-code fira-code-symbols font-awesome ];
+  fonts.packages = with pkgs; [ fira-code fira-code-symbols font-awesome inter ];
 
   # List services that you want to enable:
   services = {
