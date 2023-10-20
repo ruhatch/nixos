@@ -105,6 +105,7 @@ in
 
   programs = {
     adb.enable = true;
+    dconf.enable = true;
     gnupg.agent.enable = true;
     light.enable = true; # Backlight control
     steam.enable = true;
@@ -132,6 +133,7 @@ in
     git
     gitAndTools.gh
     git-crypt
+    gnome.gnome-tweaks
     gnumake
     gnupg
     gxmessage
@@ -212,17 +214,19 @@ in
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
-      displayManager = {
-        defaultSession = "none+xmonad";
-        xserverArgs = [ "-dpi 192" ];
-        lightdm = {
-          enable = true;
-          background = "/etc/nixos/background.jpg";
-          greeters.tiny.enable = true;
-        };
-      };
-      windowManager.xmonad.enable = true;
-      windowManager.xmonad.enableContribAndExtras = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      #displayManager = {
+      #  defaultSession = "none+xmonad";
+      #  xserverArgs = [ "-dpi 192" ];
+      #  lightdm = {
+      #    enable = true;
+      #    background = "/etc/nixos/background.jpg";
+      #    greeters.tiny.enable = true;
+      #  };
+      #};
+      #windowManager.xmonad.enable = true;
+      #windowManager.xmonad.enableContribAndExtras = true;
       layout = "gb";
       libinput.enable = true;
       libinput.touchpad = {
@@ -238,6 +242,25 @@ in
 
   # Set up the environment, including themes, system packages, and variables
   environment = {
+    gnome.excludePackages = (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ]) ++ (with pkgs.gnome; [
+      cheese
+      gnome-music
+      gedit
+      epiphany
+      geary
+      gnome-characters
+      tali
+      iagno
+      hitori
+      atomix
+      yelp
+      gnome-contacts
+      gnome-initial-setup
+    ]);
+
     etc = {
       # QT4/5 global theme
       "xdg/Trolltech.conf" = {
