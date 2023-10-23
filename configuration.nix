@@ -25,9 +25,31 @@ in
       ./tiny-greeter-config.nix
     ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-    "wpsoffice"
-  ];
+  nixpkgs = {
+    config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+      "wpsoffice"
+    ];
+    overlays = [
+      (self: super: {
+        gnome = super.gnome.overrideScope' (selfg: superg: {
+          gnome-shell = superg.gnome-shell.overrideAttrs (old: {
+            patches = (old.patches or []) ++ [
+              (pkgs.writeText "bg.patch" ''
+                --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+                +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+                @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
+                 /* Login Dialog */
+                 .login-dialog {
+                   background-color: $_gdm_bg;
+                +  background-image: url('file:///etc/nixos/background.jpg');
+                 }
+              '')
+            ];
+          });
+        });
+      })
+    ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -38,7 +60,7 @@ in
         "vga=current"
         "rd.systemd.show_status=false"
         "rd.udev.log_level=3"
-        "udev.log_priority=3"     
+        "udev.log_priority=3"
     ];
     loader = {
       grub = {
