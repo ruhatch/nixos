@@ -279,7 +279,6 @@ in
     ]) ++ (with pkgs.gnome; [
       cheese
       gnome-music
-      gedit
       epiphany
       geary
       gnome-characters
