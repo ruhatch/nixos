@@ -32,7 +32,14 @@ in
   # Use the systemd-boot EFI boot loader.
   boot = {
     kernelModules = [ "coretemp" ];
-    kernelParams = [ "i8042.reset" ];
+    kernelParams = [
+        "quiet"
+        "splash"
+        "vga=current"
+        "rd.systemd.show_status=false"
+        "rd.udev.log_level=3"
+        "udev.log_priority=3"     
+    ];
     loader = {
       grub = {
         device = "/dev/nvme0n1";
@@ -47,6 +54,8 @@ in
       efi.canTouchEfiVariables = true;
     };
     plymouth.enable = true;
+    initrd.verbose = false;
+    consoleLogLevel = 0;
   };
 
   hardware = {
