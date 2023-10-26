@@ -242,6 +242,14 @@ in
       temperature.day = 5000;
     };
 
+    undervolt = {
+      enable = true;
+      coreOffset = -125;
+      uncoreOffset = -125;
+      analogioOffset = -125;
+      gpuOffset = -100;
+    };
+
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
@@ -367,10 +375,13 @@ in
   virtualisation.docker.enable = true;
 
   # Fixing network failure on resume bug
-  powerManagement.resumeCommands = ''
-    systemctl restart dhcpcd.service
-    systemctl restart wpa_supplicant-wlp2s0.service
-  '';
+  powerManagement = {
+    powertop.enable = true; 
+    resumeCommands = ''
+      systemctl restart dhcpcd.service
+      systemctl restart wpa_supplicant-wlp2s0.service
+    '';
+  };
 
   nix = {
     package = pkgs.nixUnstable;
