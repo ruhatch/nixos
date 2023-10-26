@@ -12,6 +12,10 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
+
+  i8k = pkgs.callPackage ./i8k.nix {};
+  dell-bios-fan-control = pkgs.callPackage ./dell-bios-fan-control.nix {};
+  dellfan = pkgs.callPackage ./dellfan.nix {};
 in
 {
   imports =
@@ -27,6 +31,12 @@ in
 
   nixpkgs = {
     config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+      "nvidia-settings"
+      "nvidia-x11"
+      "optifine"
+      "steam"
+      "steam-original"
+      "steam-run"
       "wpsoffice"
     ];
     overlays = [
@@ -53,7 +63,10 @@ in
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    kernelModules = [ "coretemp" ];
+    extraModprobeConfig = ''
+      options i8k force=1 ignore_dmi=1
+    '';
+    kernelModules = [ "coretemp" "i8k" ];
     kernelParams = [
         "quiet"
         "splash"
@@ -201,6 +214,13 @@ in
     # Photo handling
     gphoto2
     rapid-photo-downloader
+
+    # i8kutils
+    dell-bios-fan-control
+    dellfan
+    i8k
+    tcl
+    tcllib
   ];
 
   fonts.packages = with pkgs; [ fira-code fira-code-symbols font-awesome inter ];
@@ -212,22 +232,22 @@ in
     openssh.enable = true;
 
     # Enable picom for compositing
-    picom = {
-      enable = true;
-      backend = "glx";
-      fade = true;
-      settings = {
-        detect-transient = true;
-        detect-client-leader = true;
-        xrender-sync-fence = true;
-      };
-      shadow = true;
-      shadowOffsets = [ (-17) (-17) ];
-      wintypes = {
-        dock = { shadow = false; };
-        dropdown_menu = { shadow = false; };
-      };
-    };
+    # picom = {
+    #   enable = true;
+    #   backend = "glx";
+    #   fade = true;
+    #   settings = {
+    #     detect-transient = true;
+    #     detect-client-leader = true;
+    #     xrender-sync-fence = true;
+    #   };
+    #   shadow = true;
+    #   shadowOffsets = [ (-17) (-17) ];
+    #   wintypes = {
+    #     dock = { shadow = false; };
+    #     dropdown_menu = { shadow = false; };
+    #   };
+    # };
 
     # Enable CUPS to print documents.
     printing = {
@@ -236,11 +256,15 @@ in
     };
 
     # Enable redshift to change screen temperature
-    redshift = {
-      enable = true;
-      brightness.night = "0.3";
-      temperature.day = 5000;
-    };
+    # redshift = {
+    #   enable = true;
+    #   brightness.night = "0.3";
+    #   temperature.day = 5000;
+    # };
+
+    udev.extraRules = ''
+      SUBSYSTEM=="hwmon", ATTRS{name}=="dell_smm", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/subsystem/hwmon/devices/dell_smm"
+    '';
 
     undervolt = {
       enable = true;
@@ -267,17 +291,17 @@ in
       #windowManager.xmonad.enable = true;
       #windowManager.xmonad.enableContribAndExtras = true;
       layout = "gb";
-      libinput.enable = true;
-      libinput.touchpad = {
-        naturalScrolling = true;
-        tapping = false;
-      };
+      #libinput.enable = true;
+      #libinput.touchpad = {
+      #  naturalScrolling = true;
+      #  tapping = false;
+      #};
       videoDrivers = [ "nvidia" ];
       xkbOptions = "compose:ralt";
     };
   };
 
-  location.provider = "geoclue2"; # For redshift
+  # location.provider = "geoclue2"; # For redshift
 
   # Set up the environment, including themes, system packages, and variables
   environment = {
@@ -330,6 +354,44 @@ in
         '';
         mode = "444";
       };
+      "i8kmon.conf" = {
+        text = ''
+          # External program to control the fans
+          set config(i8kfan)  i8kfan
+
+          # Report status on stdout, override with --verbose option
+          set config(verbose) 0
+
+          # Status check timeout (seconds), override with --timeout option
+          set config(timeout) 2
+          # Temperature display unit (C/F), override with --unit option
+          set config(unit)    C
+          # Temperature threshold at which the temperature is displayed in red
+          set config(t_high)  85
+          # Minimum expected fan speed
+          set config(min_speed) 1200
+
+          # Temperature thresholds: {fan_speeds low_ac high_ac low_batt high_batt}
+          # These were tested on the I8000. If you have a different Dell laptop model
+          # you should check the BIOS temperature monitoring and set the appropriate
+          # thresholds here. In doubt start with low values and gradually rise them
+          # until the fans are not always on when the cpu is idle.
+          # set config(0)   {{0 0}  -1  70  -1  75}
+          # set config(1)   {{0 1}  65  80  65  80}
+          # set config(2)   {{1 1}  75  85  75  85}
+          # set config(3)   {{2 2}  80 128  80 128}
+          set config(0)   {{0 0}  -1  0  -1  0}
+          set config(1)   {{0 1}  2  2  2 2}
+          set config(2)   {{1 1}  3  3  3  3}
+          set config(3)   {{1 2}  4 4 4 4}
+          set config(4)   {{2 2}  5 5 5 5}
+
+          # Speed values are set here to avoid i8kmon probe them at every time it starts.
+          set status(leftspeed)   "0 1250 2500 5000"
+          set status(rightspeed)  "0 1250 2500 5000"
+        '';
+        mode = "444";
+      };
     };
 
     extraInit = ''
@@ -354,21 +416,39 @@ in
     };
   };
 
-  systemd.user.services = {
-    "libinput-gestures" = {
-      description = "Add multitouch gestures using libinput-gestures";
-      wantedBy = [ "default.target" ];
-      serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 2;
-      serviceConfig.ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
-      environment = { DISPLAY = ":0"; };
+  systemd = {
+    user.services = {
+      "libinput-gestures" = {
+        description = "Add multitouch gestures using libinput-gestures";
+        wantedBy = [ "default.target" ];
+        serviceConfig.Restart = "always";
+        serviceConfig.RestartSec = 2;
+        serviceConfig.ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
+        environment = { DISPLAY = ":0"; };
+      };
+      "feh-background" = {
+        description = "Set desktop background using feh";
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        serviceConfig.Type = "oneshot";
+        serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
+      };
     };
-    "feh-background" = {
-      description = "Set desktop background using feh";
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      serviceConfig.Type = "oneshot";
-      serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
+    services = {
+      "i8kmon" = {
+        description = "DELL notebook fan control";
+        requisite = [ "multi-user.target" ];
+        after = [ "sys-subsystem-hwmon-devices-dell_smm.device" "multi-user.target" ];
+        bindsTo = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
+        serviceConfig = {
+          ExecStartPre= "${dell-bios-fan-control}/bin/dell-bios-fan-control 0 ";
+          ExecStart = "${i8k}/bin/i8kmon";
+          ExecStopPost = "${dell-bios-fan-control}/bin/dell-bios-fan-control 1";
+          Restart = "always";
+          RestartSec = 5;
+        };
+        wantedBy = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
+      };
     };
   };
 
@@ -376,7 +456,7 @@ in
 
   # Fixing network failure on resume bug
   powerManagement = {
-    powertop.enable = true; 
+    powertop.enable = true;
     resumeCommands = ''
       systemctl restart dhcpcd.service
       systemctl restart wpa_supplicant-wlp2s0.service
@@ -390,7 +470,5 @@ in
     '';
     settings.trusted-users = [ "root" "rupert" ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
 }
