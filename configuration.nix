@@ -434,22 +434,22 @@ in
         serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
       };
     };
-    services = {
-      "i8kmon" = {
-        description = "DELL notebook fan control";
-        requisite = [ "multi-user.target" ];
-        after = [ "sys-subsystem-hwmon-devices-dell_smm.device" "multi-user.target" ];
-        bindsTo = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
-        serviceConfig = {
-          ExecStartPre= "${dell-bios-fan-control}/bin/dell-bios-fan-control 0 ";
-          ExecStart = "${i8k}/bin/i8kmon";
-          ExecStopPost = "${dell-bios-fan-control}/bin/dell-bios-fan-control 1";
-          Restart = "always";
-          RestartSec = 5;
-        };
-        wantedBy = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
-      };
-    };
+    # services = {
+    #   "i8kmon" = {
+    #     description = "DELL notebook fan control";
+    #     requisite = [ "multi-user.target" ];
+    #     after = [ "sys-subsystem-hwmon-devices-dell_smm.device" "multi-user.target" ];
+    #     bindsTo = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
+    #     serviceConfig = {
+    #       ExecStartPre= "${dell-bios-fan-control}/bin/dell-bios-fan-control 0 ";
+    #       ExecStart = "${i8k}/bin/i8kmon";
+    #       ExecStopPost = "${dell-bios-fan-control}/bin/dell-bios-fan-control 1";
+    #       Restart = "always";
+    #       RestartSec = 5;
+    #     };
+    #     wantedBy = [ "sys-subsystem-hwmon-devices-dell_smm.device" ];
+    #   };
+    # };
   };
 
   virtualisation.docker.enable = true;
