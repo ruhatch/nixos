@@ -83,7 +83,10 @@ let
     fi
   '';
 
+  nr = pkgs.writeScriptBin "nr" ''
+    nix run nixpkgs#"$@"
+  '';
 in
 {
-  environment.systemPackages = [show-clock clip pkgs.scrot pkgs.slop pkgs.xclip focus pom];
+  environment.systemPackages = [show-clock clip pkgs.scrot pkgs.slop pkgs.xclip focus pom nr];
 }
