@@ -37,6 +37,8 @@ in
       "steam"
       "steam-original"
       "steam-run"
+      "vscode"
+      "vscode-with-extensions"
       "wpsoffice"
     ];
     overlays = [
@@ -207,6 +209,14 @@ in
     stack
     texlive.combined.scheme-full
     vlc
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        kahole.magit
+        vscodevim.vim
+        vspacecode.vspacecode
+        vspacecode.whichkey
+      ];
+    })
     wpa_supplicant_gui
     xdotool
     xssproxy
