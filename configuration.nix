@@ -178,6 +178,7 @@ in
     gitAndTools.gh
     git-crypt
     gnome.gnome-tweaks
+    gnome.pomodoro
     gnumake
     gnupg
     gxmessage
