@@ -197,7 +197,6 @@ in
     nodePackages.npm
     nodePackages.create-react-app
     openssl
-    openvpn
     optifine
     pavucontrol
     pre-commit
