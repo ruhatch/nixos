@@ -462,7 +462,17 @@ in
     # };
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      bip = "10.200.0.1/24";
+      fixed-cidr = "10.200.0.1/25";
+      default-address-pools = [
+        {base = "10.201.0.0/16"; size = 24;}
+        {base = "10.202.0.0/16"; size = 24;}
+      ];
+    };
+  };
 
   # Fixing network failure on resume bug
   powerManagement = {
