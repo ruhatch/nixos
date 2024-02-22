@@ -443,6 +443,11 @@ in
         serviceConfig.Type = "oneshot";
         serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --no-fehbg --bg-center /etc/nixos/background.jpg";
       };
+      # Needed until bug fixed by PR https://github.com/NixOS/nixpkgs/pull/275024 
+      lorri.serviceConfig = {
+        ProtectSystem = pkgs.lib.mkForce "full";
+        ProtectHome = pkgs.lib.mkForce false;   
+      };
     };
     # services = {
     #   "i8kmon" = {
