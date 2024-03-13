@@ -38,6 +38,7 @@ in
       "steam-original"
       "steam-run"
       "vscode"
+      "vscode-extension-MS-python-vscode-pylance"
       "vscode-with-extensions"
       "wpsoffice"
     ];
@@ -201,6 +202,7 @@ in
     pavucontrol
     pre-commit
     prismlauncher
+    python3
     ripgrep
     rofi
     rxvt_unicode
@@ -211,9 +213,10 @@ in
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions; [
         kahole.magit
+        mechatroner.rainbow-csv
+	ms-python.python
+        ms-python.vscode-pylance
         vscodevim.vim
-        vspacecode.vspacecode
-        vspacecode.whichkey
       ];
     })
     wpa_supplicant_gui
