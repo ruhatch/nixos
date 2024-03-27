@@ -31,6 +31,7 @@ in
 
   nixpkgs = {
     config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+      "google-chrome"
       "nvidia-settings"
       "nvidia-x11"
       "optifine"
