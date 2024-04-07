@@ -154,6 +154,7 @@ in
   programs = {
     adb.enable = true;
     dconf.enable = true;
+    direnv.enable = true;
     gnupg.agent.enable = true;
     light.enable = true; # Backlight control
     steam.enable = true;
@@ -213,8 +214,11 @@ in
     vlc
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions; [
+        haskell.haskell
+        justusadam.language-haskell
         kahole.magit
         mechatroner.rainbow-csv
+        mkhl.direnv
 	ms-python.python
         ms-python.vscode-pylance
         vscodevim.vim
