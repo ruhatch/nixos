@@ -280,6 +280,8 @@ in
     #   temperature.day = 5000;
     # };
 
+    tailscale.enable = true;
+
     udev.extraRules = ''
       SUBSYSTEM=="hwmon", ATTRS{name}=="dell_smm", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/subsystem/hwmon/devices/dell_smm"
     '';
