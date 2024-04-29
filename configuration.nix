@@ -45,7 +45,7 @@ in
     ];
     overlays = [
       (self: super: {
-        gnome = super.gnome.overrideScope' (selfg: superg: {
+        gnome = super.gnome.overrideScope (selfg: superg: {
           gnome-shell = superg.gnome-shell.overrideAttrs (old: {
             patches = (old.patches or []) ++ [
               (pkgs.writeText "bg.patch" ''
@@ -463,14 +463,16 @@ in
       #};
       #windowManager.xmonad.enable = true;
       #windowManager.xmonad.enableContribAndExtras = true;
-      layout = "gb";
       #libinput.enable = true;
       #libinput.touchpad = {
       #  naturalScrolling = true;
       #  tapping = false;
       #};
       videoDrivers = [ "nvidia" ];
-      xkbOptions = "compose:ralt";
+      xkb = {
+        layout = "gb";
+        options = "compose:ralt";
+      };
     };
   };
 
