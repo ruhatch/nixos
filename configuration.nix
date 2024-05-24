@@ -220,6 +220,7 @@ in
         kahole.magit
         mechatroner.rainbow-csv
         mkhl.direnv
+        ms-python.black-formatter
 	ms-python.python
         ms-python.vscode-pylance
         vscodevim.vim
