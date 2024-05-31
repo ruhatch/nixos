@@ -17,7 +17,7 @@
             then self.rev
             else throw "Refusing to build from a dirty Git tree!";
 
-          nix.  nixPath = [
+          nix.nixPath = [
 	    "nixpkgs=${nixpkgs}"
 	    "/nix/var/nix/profiles/per-user/root/channels"
 	  ];
