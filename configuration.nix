@@ -330,13 +330,12 @@ in
   # Set up the environment, including themes, system packages, and variables
   environment = {
     gnome.excludePackages = (with pkgs; [
+      epiphany
       gnome-photos
       gnome-tour
     ]) ++ (with pkgs.gnome; [
       cheese
       gnome-music
-      epiphany
-      geary
       gnome-characters
       tali
       iagno
