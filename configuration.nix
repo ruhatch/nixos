@@ -67,6 +67,7 @@ in
 
   # Use the systemd-boot EFI boot loader.
   boot = {
+    kernel.sysctl = { "vm.swappiness" = 10; };
     extraModprobeConfig = ''
       options i8k force=1 ignore_dmi=1
     '';
