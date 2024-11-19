@@ -32,6 +32,7 @@ in
   nixpkgs = {
     config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
       "google-chrome"
+      "keymapp"
       "nvidia-settings"
       "nvidia-x11"
       "optifine"
@@ -101,6 +102,7 @@ in
   hardware = {
     bluetooth.enable = true;
     cpu.intel.updateMicrocode = true;
+    keyboard.zsa.enable = true;
     # Enable udev rules for Ledger support
     ledger.enable = true;
     opengl.enable = true;
@@ -196,6 +198,7 @@ in
     hsetroot
     htop
     keychain
+    keymapp
     nvidia-offload
     nodejs-slim
     nodePackages.npm
