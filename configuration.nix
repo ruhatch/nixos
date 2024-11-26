@@ -43,6 +43,7 @@ in
       "vscode-extension-MS-python-vscode-pylance"
       "vscode-with-extensions"
       "wpsoffice"
+      "zoom"
     ];
     overlays = [
       (self: super: {
@@ -234,6 +235,7 @@ in
     xdotool
     xssproxy
     zathura
+    zoom-us
 
     # Photo handling
     gphoto2
