@@ -39,6 +39,7 @@ in
       "steam"
       "steam-original"
       "steam-run"
+      "steam-unwrapped"
       "vscode"
       "vscode-extension-MS-python-vscode-pylance"
       "vscode-with-extensions"
@@ -47,21 +48,19 @@ in
     ];
     overlays = [
       (self: super: {
-        gnome = super.gnome.overrideScope (selfg: superg: {
-          gnome-shell = superg.gnome-shell.overrideAttrs (old: {
-            patches = (old.patches or []) ++ [
-              (pkgs.writeText "bg.patch" ''
-                --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-                +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-                @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
-                 /* Login Dialog */
-                 .login-dialog {
-                   background-color: $_gdm_bg;
-                +  background-image: url('file:///etc/nixos/background.jpg');
-                 }
-              '')
-            ];
-          });
+        gnome-shell = super.gnome-shell.overrideAttrs (old: {
+          patches = (old.patches or []) ++ [
+            (pkgs.writeText "bg.patch" ''
+              --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+              +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+              @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
+               /* Login Dialog */
+               .login-dialog {
+                 background-color: $_gdm_bg;
+              +  background-image: url('file:///etc/nixos/background.jpg');
+               }
+            '')
+          ];
         });
       })
     ];
@@ -103,21 +102,18 @@ in
   hardware = {
     bluetooth.enable = true;
     cpu.intel.updateMicrocode = true;
+    graphics.enable = true;
     keyboard.zsa.enable = true;
     # Enable udev rules for Ledger support
     ledger.enable = true;
-    opengl.enable = true;
     nvidia = {
+      open = false;
       modesetting.enable = true;
       prime = {
         offload.enable = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };
-    };
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
     };
   };
 
@@ -162,7 +158,10 @@ in
     gnupg.agent.enable = true;
     light.enable = true; # Backlight control
     steam.enable = true;
-    vim.defaultEditor = true;
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
     zsh.enable = true;
   };
 
@@ -186,8 +185,8 @@ in
     git
     gitAndTools.gh
     git-crypt
-    gnome.gnome-tweaks
-    gnome.pomodoro
+    gnome-pomodoro
+    gnome-tweaks
     gnumake
     gnupg
     gxmessage
@@ -212,7 +211,7 @@ in
     python3
     ripgrep
     rofi
-    rxvt_unicode
+    rxvt-unicode-unwrapped
     slock
     stack
     texlive.combined.scheme-full
@@ -256,6 +255,10 @@ in
     logind.lidSwitch = "hibernate";
     lorri.enable = true;
     openssh.enable = true;
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
 
     # Enable picom for compositing
     # picom = {
@@ -336,13 +339,12 @@ in
   # Set up the environment, including themes, system packages, and variables
   environment = {
     gnome.excludePackages = (with pkgs; [
+      cheese
       epiphany
+      gnome-characters
+      gnome-music
       gnome-photos
       gnome-tour
-    ]) ++ (with pkgs.gnome; [
-      cheese
-      gnome-music
-      gnome-characters
       tali
       iagno
       hitori
