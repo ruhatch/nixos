@@ -227,6 +227,7 @@ in
         ms-python.black-formatter
 	ms-python.python
         ms-python.vscode-pylance
+	redhat.java
         vscodevim.vim
       ];
     })
